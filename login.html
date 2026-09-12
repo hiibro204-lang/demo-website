@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — demo_website</title>
+<meta name="description" content="Login or create an account on the demo_website educational demo.">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+    <h2 style="text-align:center;margin-bottom:6px">Welcome to demo_website</h2>
+    <p class="muted" style="text-align:center;font-size:.88rem;margin-bottom:22px">Educational demo — accounts are stored in your browser only.</p>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</div>
+      <div class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</div>
+    </div>
+    <div class="form-error" id="auth-error"></div>
+    <form id="form-login" onsubmit="return doLogin(event)">
+      <div class="form-group"><label>Email</label><input type="email" id="login-email" required placeholder="you@company.com"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="login-password" required placeholder="••••••••"></div>
+      <button type="submit" class="btn btn-primary btn-block">Login</button>
+    </form>
+    <form id="form-signup" style="display:none" onsubmit="return doSignup(event)">
+      <div class="form-group"><label>Full Name</label><input type="text" id="su-name" required placeholder="Priya Sharma"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="su-email" required placeholder="you@company.com"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="su-password" required minlength="6" placeholder="Min 6 characters"></div>
+      <div class="form-group"><label>Account Type</label>
+        <select id="su-role">
+          <option value="buyer">Buyer — order office supplies</option>
+          <option value="vendor">Vendor — sell on the marketplace</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+    </form>
+  </div>
+</div>
+
+<div id="footer-placeholder"></div>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/app.js"></script>
+<script>
+function switchTab(t){
+  document.getElementById("tab-login").classList.toggle("active",t==="login");
+  document.getElementById("tab-signup").classList.toggle("active",t==="signup");
+  document.getElementById("form-login").style.display=t==="login"?"block":"none";
+  document.getElementById("form-signup").style.display=t==="signup"?"block":"none";
+  hideErrors();
+}
+function showError(msg){const e=document.getElementById("auth-error");e.textContent=msg;e.style.display="block"}
+function hideErrors(){document.getElementById("auth-error").style.display="none"}
+
+function doLogin(e){
+  e.preventDefault();hideErrors();
+  const r=Auth.login(document.getElementById("login-email").value.trim(),document.getElementById("login-password").value);
+  if(!r.ok){showError(r.error);return false}
+  toast("Welcome back, "+r.user.name.split(" ")[0]+"!");
+  setTimeout(()=>{window.location.href=r.user.role==="vendor"?"vendor.html":"dashboard.html"},700);
+  return false;
+}
+function doSignup(e){
+  e.preventDefault();hideErrors();
+  const name=document.getElementById("su-name").value.trim();
+  const email=document.getElementById("su-email").value.trim();
+  const pw=document.getElementById("su-password").value;
+  const role=document.getElementById("su-role").value;
+  const r=Auth.signup(name,email,pw,role);
+  if(!r.ok){showError(r.error);return false}
+  toast("Account created — welcome aboard!");
+  setTimeout(()=>{window.location.href=role==="vendor"?"vendor.html":"dashboard.html"},700);
+  return false;
+}
+</script>
+</body>
+</html>
