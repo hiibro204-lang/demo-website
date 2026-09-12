@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — demo_website</title>
+<meta name="description" content="Checkout page for the demo_website educational demo.">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<section class="page-head">
+  <div class="container">
+    <h1 class="section-title">Checkout</h1>
+    <p class="section-sub">Confirm your shipping details and place your order.</p>
+    <div id="checkout-content"></div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/app.js"></script>
+<script>
+if(Auth.requireAuth()){
+  const items=Cart.itemsWithProducts();
+  const content=document.getElementById("checkout-content");
+  if(items.length===0){
+    content.innerHTML=`
+    <div class="success-panel">
+      <div class="big">🛒</div>
+      <h2>Nothing to check out</h2>
+      <p class="muted" style="margin:10px 0 22px">Your cart is empty — add some products first.</p>
+      <a href="catalog.html" class="btn btn-primary">Browse Catalog</a>
+    </div>`;
+  }else{
+    content.innerHTML=`
+    <div class="cart-layout">
+      <div class="card" style="padding:28px">
+        <h3 style="margin-bottom:20px">Shipping & Billing</h3>
+        <form onsubmit="return placeOrder(event)">
+          <div class="form-row">
+            <div class="form-group"><label>Company / Full Name</label><input type="text" required placeholder="Acme Corp"></div>
+            <div class="form-group"><label>Phone</label><input type="tel" required placeholder="+1 555 010 0200"></div>
+          </div>
+          <div class="form-group"><label>Street Address</label><input type="text" required placeholder="Street and number"></div>
+          <div class="form-row">
+            <div class="form-group"><label>City</label><input type="text" required placeholder="Demo City"></div>
+            <div class="form-group"><label>ZIP / PIN</label><input type="text" required placeholder="00000"></div>
+          </div>
+          <div class="form-group"><label>Payment Method</label>
+            <select><option>Pay on invoice (Net 30)</option><option>Credit account (demo)</option></select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Place Order — ${formatPrice(Cart.total())}</button>
+          <p class="muted" style="font-size:.8rem;margin-top:12px;text-align:center">Educational demo — no payment is processed and no goods are shipped.</p>
+        </form>
+      </div>
+      <div class="summary card" style="padding:26px">
+        <h3 style="margin-bottom:14px">Order Summary</h3>
+        ${items.map(i=>`<div class="sum-row"><span class="muted">${i.qty} × ${i.product.name}</span><span>${formatPrice(i.product.price*i.qty)}</span></div>`).join("")}
+        <div class="sum-row total"><span>Total</span><span>${formatPrice(Cart.total())}</span></div>
+      </div>
+    </div>`;
+  }
+}
+
+function placeOrder(e){
+  e.preventDefault();
+  const orders=JSON.parse(localStorage.getItem("dw_orders")||"[]");
+  const order={
+    id:"ORD-"+(3000+orders.length+1),
+    date:new Date().toISOString().slice(0,10),
+    status:"confirmed",
+    items:Cart.get(),
+    total:Cart.total()
+  };
+  orders.push(order);
+  localStorage.setItem("dw_orders",JSON.stringify(orders));
+  Cart.clear();
+  toast("Order "+order.id+" placed successfully!");
+  document.getElementById("checkout-content").innerHTML=`
+  <div class="success-panel">
+    <div class="big">✅</div>
+    <h2>Order confirmed!</h2>
+    <p class="muted" style="margin:10px 0 6px">Your order <strong>${order.id}</strong> for <strong>${formatPrice(order.total)}</strong> has been placed.</p>
+    <p class="muted" style="font-size:.85rem;margin-bottom:26px">This is an educational demo — no payment was processed and nothing will be shipped.</p>
+    <a href="dashboard.html" class="btn btn-primary">View Dashboard</a>
+    <a href="catalog.html" class="btn btn-secondary" style="margin-top:10px">Continue Shopping</a>
+  </div>`;
+  return false;
+}
+</script>
+</body>
+</html>
