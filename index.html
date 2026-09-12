@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home — demo_website</title>
+<meta name="description" content="Educational demo e-commerce website.">
+<link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <span class="badge">Educational Demo · Not a Real Business</span>
+    <h1>Office Supplies & Managed Procurement — <span>Under One Roof</span></h1>
+    <p>A full-stack procurement platform. Browse supplies, place orders, track deliveries, and manage invoices — all in one place.</p>
+    <div class="hero-cta">
+      <a href="catalog.html" class="btn btn-primary">Browse Catalog</a>
+      <a href="login.html" class="btn btn-secondary">Create Account</a>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee"><div class="marquee-track">
+  <span>Office Stationery</span><span>Housekeeping</span><span>IT & Technology</span><span>Pantry Supplies</span><span>Gifting</span><span>Facility Assets</span><span>Eco-Certified</span><span>Nationwide Delivery</span>
+  <span>Office Stationery</span><span>Housekeeping</span><span>IT & Technology</span><span>Pantry Supplies</span><span>Gifting</span><span>Facility Assets</span><span>Eco-Certified</span><span>Nationwide Delivery</span>
+</div></div>
+
+<!-- Stats -->
+<section class="stats" style="padding:40px 0">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat"><div class="num">500+</div><div class="label">Service areas</div></div>
+      <div class="stat"><div class="num">10+</div><div class="label">Logistics partners</div></div>
+      <div class="stat"><div class="num">4</div><div class="label">Operations hubs</div></div>
+      <div class="stat"><div class="num">100+</div><div class="label">Products available</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services">
+  <div class="container">
+    <h2 class="section-title text-center reveal">What we offer</h2>
+    <p class="section-sub text-center reveal">Three pillars of procurement, built into one platform.</p>
+    <div class="grid grid-3">
+      <div class="card reveal">
+        <div style="font-size:2rem;margin-bottom:12px">🛒</div>
+        <h3 style="margin-bottom:8px">B2B Office Supplies</h3>
+        <p style="font-size:.9rem;color:var(--text-dim)">A to Z workspace supplies — stationery, pantry, housekeeping, IT, and gifting. Tax-compliant invoicing and credit terms built in.</p>
+        <a href="catalog.html" class="btn btn-secondary btn-sm mt-20">Browse Catalog</a>
+      </div>
+      <div class="card reveal">
+        <div style="font-size:2rem;margin-bottom:12px">📦</div>
+        <h3 style="margin-bottom:8px">BuyerPortal</h3>
+        <p style="font-size:.9rem;color:var(--text-dim)">Your private procurement portal. Onboard vendors, manage catalogues, raise orders, and track fulfilment from one dashboard.</p>
+        <a href="dashboard.html" class="btn btn-secondary btn-sm mt-20">Open Dashboard</a>
+      </div>
+      <div class="card reveal">
+        <div style="font-size:2rem;margin-bottom:12px">⚙️</div>
+        <h3 style="margin-bottom:8px">OrderFlow (Vendor OMS)</h3>
+        <p style="font-size:.9rem;color:var(--text-dim)">A complete order management system for vendors. Receive orders, process, fulfil, invoice, and track payments.</p>
+        <a href="vendor.html" class="btn btn-secondary btn-sm mt-20">Vendor Portal</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section style="background:var(--surface)">
+  <div class="container">
+    <h2 class="section-title text-center reveal">How it works</h2>
+    <p class="section-sub text-center reveal">Three simple steps from requirement to delivery.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <h3>Browse & order</h3>
+        <p>Browse the catalog, add items to cart, and place your order in minutes.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <h3>We process & ship</h3>
+        <p>Our team processes your order and ships via our logistics partners.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <h3>Track & get invoiced</h3>
+        <p>Track delivery in your dashboard and receive tax-compliant invoices automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section>
+  <div class="container">
+    <div class="flex-between mb-40">
+      <div><h2 class="section-title reveal">Featured products</h2><p class="section-sub reveal">A selection from our catalog.</p></div>
+      <a href="catalog.html" class="btn btn-secondary btn-sm reveal">View all →</a>
+    </div>
+    <div class="grid grid-4" id="featured-grid"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:var(--surface);text-align:center;position:relative;overflow:hidden">
+  <div class="container" style="position:relative;z-index:1">
+    <h2 class="section-title reveal">Ready to get started?</h2>
+    <p class="section-sub reveal">Create a free account and start ordering in minutes.</p>
+    <a href="login.html" class="btn btn-primary reveal">Get Started</a>
+  </div>
+</section>
+
+<script>
+const featured=PRODUCTS.slice(0,4);
+document.getElementById("featured-grid").innerHTML=featured.map(p=>`
+  <a href="product.html?id=${p.id}" class="product-card reveal">
+    <div class="product-img">${p.emoji}</div>
+    <div class="product-body">
+      <span class="product-cat">${p.category}</span>
+      <h3>${p.name}</h3>
+      <div class="price">${formatPrice(p.price)}</div>
+      <div class="stock">${p.stock>0?'In stock':'Out of stock'}</div>
+    </div>
+  </a>
+`).join("");
+</script>
+
+<div id="footer-placeholder"></div>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/app.js"></script>
