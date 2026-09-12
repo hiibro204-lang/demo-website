@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendor Portal — demo_website</title>
+<meta name="description" content="Vendor order management portal for the demo_website educational demo.">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<section class="page-head">
+  <div class="container">
+    <h1 class="section-title" id="vendor-title">Vendor Portal</h1>
+    <p class="section-sub">OrderFlow — your order management system. Receive, process, and fulfil orders.</p>
+    <div class="stat-cards" id="stats"></div>
+    <div class="panel">
+      <h3>Incoming Orders</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Order ID</th><th>Date</th><th>Customer</th><th>Product</th><th>Qty</th><th>Total</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="vendor-orders-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>How OrderFlow works</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><h3>Receive</h3><p>New orders arrive with status <strong>pending</strong>.</p></div>
+        <div class="step"><div class="step-num">02</div><h3>Process & ship</h3><p>Advance orders through <strong>processing</strong> and <strong>shipped</strong>.</p></div>
+        <div class="step"><div class="step-num">03</div><h3>Deliver & invoice</h3><p>Mark orders <strong>delivered</strong> — invoices are raised automatically.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/app.js"></script>
+<script>
+const NEXT_STATUS={"pending":"processing","processing":"shipped","shipped":"delivered","delivered":"delivered"};
+
+if(Auth.requireVendor()){
+  const user=Auth.currentUser();
+  document.getElementById("vendor-title").textContent="Vendor Portal — "+user.name.split(" ")[0];
+  const orders=SAMPLE_VENDOR_ORDERS;
+  const revenue=orders.reduce((s,o)=>s+o.total,0);
+  const pending=orders.filter(o=>o.status==="pending").length;
+  const processing=orders.filter(o=>o.status==="processing").length;
+  document.getElementById("stats").innerHTML=`
+    <div class="stat"><div class="num">${orders.length}</div><div class="label">Total orders</div></div>
+    <div class="stat"><div class="num">${pending}</div><div class="label">Pending</div></div>
+    <div class="stat"><div class="num">${processing}</div><div class="label">Processing</div></div>
+    <div class="stat"><div class="num">${formatPrice(revenue)}</div><div class="label">Revenue</div></div>`;
+  renderVendorOrders();
+}
+
+function renderVendorOrders(){
+  document.getElementById("vendor-orders-body").innerHTML=SAMPLE_VENDOR_ORDERS.map(o=>`
+    <tr>
+      <td><strong>${o.id}</strong></td>
+      <td>${o.date}</td>
+      <td>${o.customer}</td>
+      <td>${o.product}</td>
+      <td>${o.qty}</td>
+      <td>${formatPrice(o.total)}</td>
+      <td><span class="status status-${o.status}">${o.status}</span></td>
+      <td>${o.status!=="delivered"?`<button class="btn btn-secondary btn-sm" onclick="advance('${o.id}')">Advance →</button>`:"—"}</td>
+    </tr>`).join("");
+}
+function advance(id){
+  const o=SAMPLE_VENDOR_ORDERS.find(x=>x.id===id);
+  if(o&&NEXT_STATUS[o.status]){
+    o.status=NEXT_STATUS[o.status];
+    renderVendorOrders();
+    toast("Order "+id+" → "+o.status);
+  }
+}
+</script>
+</body>
+</html>
