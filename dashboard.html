@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — demo_website</title>
+<meta name="description" content="Buyer dashboard for the demo_website educational demo.">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<section class="page-head">
+  <div class="container">
+    <h1 class="section-title" id="welcome-title">Dashboard</h1>
+    <p class="section-sub" id="welcome-sub">Your orders, invoices, and account overview.</p>
+    <div class="stat-cards" id="stats"></div>
+    <div class="panel">
+      <h3>My Orders</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Order ID</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+          <tbody id="orders-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Invoices</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Invoice</th><th>Order</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody id="invoices-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/app.js"></script>
+<script>
+if(Auth.requireAuth()){
+  const user=Auth.currentUser();
+  document.getElementById("welcome-title").textContent="Welcome back, "+user.name.split(" ")[0]+"!";
+  const myOrders=JSON.parse(localStorage.getItem("dw_orders")||"[]");
+  const orders=myOrders.concat(SAMPLE_ORDERS);
+  const spend=orders.reduce((s,o)=>s+o.total,0);
+  const delivered=orders.filter(o=>o.status==="delivered").length;
+  document.getElementById("stats").innerHTML=`
+    <div class="stat"><div class="num">${orders.length}</div><div class="label">Total orders</div></div>
+    <div class="stat"><div class="num">${delivered}</div><div class="label">Delivered</div></div>
+    <div class="stat"><div class="num">${SAMPLE_INVOICES.filter(i=>i.status==="pending").length}</div><div class="label">Pending invoices</div></div>
+    <div class="stat"><div class="num">${formatPrice(spend)}</div><div class="label">Total spend</div></div>`;
+  document.getElementById("orders-body").innerHTML=orders.map(o=>`
+    <tr><td><strong>${o.id}</strong></td><td>${o.date}</td><td>${o.items.reduce((s,i)=>s+i.qty,0)}</td><td>${formatPrice(o.total)}</td><td><span class="status status-${o.status}">${o.status}</span></td></tr>`).join("");
+  document.getElementById("invoices-body").innerHTML=SAMPLE_INVOICES.map(i=>`
+    <tr><td><strong>${i.id}</strong></td><td>${i.orderId}</td><td>${i.date}</td><td>${formatPrice(i.amount)}</td><td><span class="status status-${i.status}">${i.status}</span></td></tr>`).join("");
+}
+</script>
+</body>
+</html>
