@@ -6,12 +6,62 @@
 <title>Home — demo_website</title>
 <meta name="description" content="Educational demo e-commerce website.">
 <link rel="stylesheet" href="css/styles.css">
+<style>
+/* ---------- Premium Image Styles ---------- */
+.hero{position:relative;background:url('https://images.unsplash.com/photo-1553413077-190dd305871c?w=1600&q=80&auto=format&fit=crop') center/cover no-repeat !important}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,45,18,.92) 0%,rgba(194,65,12,.85) 50%,rgba(249,115,22,.75) 100%);z-index:0}
+.hero .container{position:relative;z-index:1}
+.hero::after{display:none}
 
+.service-img{width:100%;height:200px;object-fit:cover;border-radius:10px 10px 0 0;margin:-28px -28px 20px;margin-bottom:16px}
+.service-card-img{overflow:hidden;padding:0}
+.service-card-img .service-body{padding:0 24px 24px}
+.service-card-img .service-img{margin:0;border-radius:0}
+
+.product-card .product-img{height:180px !important}
+.product-card .product-img img{width:100%;height:100%;object-fit:cover}
+
+.about-section{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+@media(max-width:768px){.about-section{grid-template-columns:1fr}}
+.about-img{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);height:400px}
+.about-img img{width:100%;height:100%;object-fit:cover}
+
+.testimonials{background:var(--surface)}
+.testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:768px){.testimonial-grid{grid-template-columns:1fr}}
+.testimonial-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
+.testimonial-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.testimonial-avatar{width:60px;height:60px;border-radius:50%;object-fit:cover;margin-bottom:16px}
+.testimonial-stars{color:#f59e0b;margin-bottom:12px;font-size:1rem}
+.testimonial-text{font-size:.95rem;color:var(--text);line-height:1.6;margin-bottom:16px}
+.testimonial-name{font-weight:700;font-size:.95rem}
+.testimonial-role{font-size:.82rem;color:var(--text-dim)}
+
+.cta-section{position:relative;background:url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1600&q=80&auto=format&fit=crop') center/cover no-repeat !important;text-align:center}
+.cta-section::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,45,18,.95) 0%,rgba(194,65,12,.90) 100%);z-index:0}
+.cta-section .container{position:relative;z-index:1}
+
+.stats-section{position:relative;overflow:hidden}
+.step-img{width:100%;height:140px;object-fit:cover;border-radius:10px;margin-bottom:16px}
+
+.cert-img{width:100%;height:80px;object-fit:cover;border-radius:8px;margin-bottom:12px}
+
+.sustain-hero{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:40px}
+@media(max-width:768px){.sustain-hero{grid-template-columns:1fr}}
+.sustain-img{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);height:300px}
+.sustain-img img{width:100%;height:100%;object-fit:cover}
+
+.product-detail-img{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg)}
+.product-detail-img img{width:100%;height:380px;object-fit:cover}
+
+.founder-note{background:linear-gradient(135deg,var(--accent-soft),var(--surface));border:1px solid var(--border);border-radius:var(--radius);padding:36px;margin-top:40px;position:relative}
+.founder-note::before{content:'"';position:absolute;top:-10px;left:24px;font-size:4rem;color:var(--accent);opacity:.2;font-family:Georgia,serif}
+</style>
 </head>
 <body>
 <div id="nav-placeholder"></div>
 
-<!-- Hero -->
+<!-- Hero with real background image -->
 <section class="hero">
   <div class="container">
     <span class="badge">Educational Demo · Not a Real Business</span>
@@ -31,7 +81,7 @@
 </div></div>
 
 <!-- Stats -->
-<section class="stats" style="padding:40px 0">
+<section class="stats-section" style="padding:48px 0">
   <div class="container">
     <div class="stats-grid">
       <div class="stat"><div class="num">500+</div><div class="label">Service areas</div></div>
@@ -42,51 +92,87 @@
   </div>
 </section>
 
-<!-- Services -->
-<section id="services">
+<!-- About Section with real image -->
+<section id="about">
   <div class="container">
-    <h2 class="section-title text-center reveal">What we offer</h2>
-    <p class="section-sub text-center reveal">Three pillars of procurement, built into one platform.</p>
-    <div class="grid grid-3">
-      <div class="card reveal">
-        <div style="font-size:2rem;margin-bottom:12px">🛒</div>
-        <h3 style="margin-bottom:8px">B2B Office Supplies</h3>
-        <p style="font-size:.9rem;color:var(--text-dim)">A to Z workspace supplies — stationery, pantry, housekeeping, IT, and gifting. Tax-compliant invoicing and credit terms built in.</p>
-        <a href="catalog.html" class="btn btn-secondary btn-sm mt-20">Browse Catalog</a>
+    <div class="about-section">
+      <div>
+        <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1200&q=80&auto=format&fit=crop" alt="Professional team" class="about-img" loading="lazy">
       </div>
-      <div class="card reveal">
-        <div style="font-size:2rem;margin-bottom:12px">📦</div>
-        <h3 style="margin-bottom:8px">BuyerPortal</h3>
-        <p style="font-size:.9rem;color:var(--text-dim)">Your private procurement portal. Onboard vendors, manage catalogues, raise orders, and track fulfilment from one dashboard.</p>
-        <a href="dashboard.html" class="btn btn-secondary btn-sm mt-20">Open Dashboard</a>
-      </div>
-      <div class="card reveal">
-        <div style="font-size:2rem;margin-bottom:12px">⚙️</div>
-        <h3 style="margin-bottom:8px">OrderFlow (Vendor OMS)</h3>
-        <p style="font-size:.9rem;color:var(--text-dim)">A complete order management system for vendors. Receive orders, process, fulfil, invoice, and track payments.</p>
-        <a href="vendor.html" class="btn btn-secondary btn-sm mt-20">Vendor Portal</a>
+      <div>
+        <span class="badge" style="margin-bottom:16px">About Us</span>
+        <h2 class="section-title">A decade of procurement expertise, built into every order.</h2>
+        <p class="section-sub">We've spent years understanding where procurement breaks — fragmented suppliers, inconsistent pricing, delayed deliveries. We built a platform that fixes all of it.</p>
+        <p style="color:var(--text-dim);font-size:.95rem;margin-bottom:24px">From a single pack of pens to a full office fit-out, our platform handles sourcing, negotiation, delivery, and invoicing. One partner, one invoice, full transparency.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div style="padding:16px;background:var(--card);border-radius:10px;border:1px solid var(--border)">
+            <div style="font-size:1.5rem;font-weight:800;color:var(--accent)">10+</div>
+            <div style="font-size:.82rem;color:var(--text-dim)">Years of operations</div>
+          </div>
+          <div style="padding:16px;background:var(--card);border-radius:10px;border:1px solid var(--border)">
+            <div style="font-size:1.5rem;font-weight:800;color:var(--accent)">2,500+</div>
+            <div style="font-size:.82rem;color:var(--text-dim)">Businesses served</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- How It Works -->
+<!-- Services with real images -->
+<section id="services">
+  <div class="container">
+    <h2 class="section-title text-center reveal">What we offer</h2>
+    <p class="section-sub text-center reveal">Three pillars of procurement, built into one platform.</p>
+    <div class="grid grid-3">
+      <div class="card service-card-img reveal">
+        <img src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?w=800&q=80&auto=format&fit=crop" alt="Office Supplies" class="service-img" loading="lazy">
+        <div class="service-body">
+          <h3 style="margin-bottom:8px">B2B Office Supplies</h3>
+          <p style="font-size:.9rem;color:var(--text-dim)">A to Z workspace supplies — stationery, pantry, housekeeping, IT, and gifting. Tax-compliant invoicing and credit terms built in.</p>
+          <a href="catalog.html" class="btn btn-secondary btn-sm mt-20">Browse Catalog</a>
+        </div>
+      </div>
+      <div class="card service-card-img reveal">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format&fit=crop" alt="BuyerPortal Dashboard" class="service-img" loading="lazy">
+        <div class="service-body">
+          <h3 style="margin-bottom:8px">BuyerPortal</h3>
+          <p style="font-size:.9rem;color:var(--text-dim)">Your private procurement portal. Onboard vendors, manage catalogues, raise orders, and track fulfilment from one dashboard.</p>
+          <a href="dashboard.html" class="btn btn-secondary btn-sm mt-20">Open Dashboard</a>
+        </div>
+      </div>
+      <div class="card service-card-img reveal">
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80&auto=format&fit=crop" alt="Logistics and Shipping" class="service-img" loading="lazy">
+        <div class="service-body">
+          <h3 style="margin-bottom:8px">OrderFlow (Vendor OMS)</h3>
+          <p style="font-size:.9rem;color:var(--text-dim)">A complete order management system for vendors. Receive orders, process, fulfil, invoice, and track payments.</p>
+          <a href="vendor.html" class="btn btn-secondary btn-sm mt-20">Vendor Portal</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works with images -->
 <section style="background:var(--surface)">
   <div class="container">
     <h2 class="section-title text-center reveal">How it works</h2>
     <p class="section-sub text-center reveal">Three simple steps from requirement to delivery.</p>
     <div class="steps">
       <div class="step reveal">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&auto=format&fit=crop" alt="Browse and order" class="step-img" loading="lazy">
         <div class="step-num">01</div>
         <h3>Browse & order</h3>
         <p>Browse the catalog, add items to cart, and place your order in minutes.</p>
       </div>
       <div class="step reveal">
+        <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=800&q=80&auto=format&fit=crop" alt="Processing and shipping" class="step-img" loading="lazy">
         <div class="step-num">02</div>
         <h3>We process & ship</h3>
         <p>Our team processes your order and ships via our logistics partners.</p>
       </div>
       <div class="step reveal">
+        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80&auto=format&fit=crop" alt="Track and get invoiced" class="step-img" loading="lazy">
         <div class="step-num">03</div>
         <h3>Track & get invoiced</h3>
         <p>Track delivery in your dashboard and receive tax-compliant invoices automatically.</p>
@@ -95,7 +181,7 @@
   </div>
 </section>
 
-<!-- Featured Products -->
+<!-- Featured Products with real images -->
 <section>
   <div class="container">
     <div class="flex-between mb-40">
@@ -106,20 +192,104 @@
   </div>
 </section>
 
-<!-- CTA -->
-<section style="background:var(--surface);text-align:center;position:relative;overflow:hidden">
-  <div class="container" style="position:relative;z-index:1">
-    <h2 class="section-title reveal">Ready to get started?</h2>
-    <p class="section-sub reveal">Create a free account and start ordering in minutes.</p>
-    <a href="login.html" class="btn btn-primary reveal">Get Started</a>
+<!-- Sustainability Section -->
+<section style="background:var(--surface)">
+  <div class="container">
+    <div class="sustain-hero reveal">
+      <div>
+        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80&auto=format&fit=crop" alt="Sustainability" class="sustain-img" loading="lazy">
+      </div>
+      <div>
+        <span class="badge" style="margin-bottom:16px">Sustainability</span>
+        <h2 class="section-title">We sell a lot of paper. So we made it forest-friendly.</h2>
+        <p class="section-sub">Eco-certified tissues. Recycled copier paper. Biodegradable cleaning products. Sustainability isn't an add-on — it's built into everything we ship.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="padding:14px;background:var(--card);border-radius:10px;border:1px solid var(--border);text-align:center">
+            <div style="font-size:.75rem;color:var(--accent);font-weight:600;text-transform:uppercase;margin-bottom:4px">Certified</div>
+            <div style="font-size:.88rem">FSC-certified tissues</div>
+          </div>
+          <div style="padding:14px;background:var(--card);border-radius:10px;border:1px solid var(--border);text-align:center">
+            <div style="font-size:.75rem;color:var(--accent);font-weight:600;text-transform:uppercase;margin-bottom:4px">Certified</div>
+            <div style="font-size:.88rem">Recycled copier paper</div>
+          </div>
+          <div style="padding:14px;background:var(--card);border-radius:10px;border:1px solid var(--border);text-align:center">
+            <div style="font-size:.75rem;color:var(--accent);font-weight:600;text-transform:uppercase;margin-bottom:4px">Certified</div>
+            <div style="font-size:.88rem">Eco-certified cleaning</div>
+          </div>
+          <div style="padding:14px;background:var(--card);border-radius:10px;border:1px solid var(--border);text-align:center">
+            <div style="font-size:.75rem;color:var(--accent);font-weight:600;text-transform:uppercase;margin-bottom:4px">Certified</div>
+            <div style="font-size:.88rem">Compostable cutlery</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+  <div class="container">
+    <h2 class="section-title text-center reveal">Trusted by businesses worldwide</h2>
+    <p class="section-sub text-center reveal">What our customers say about working with us.</p>
+    <div class="testimonial-grid">
+      <div class="testimonial-card reveal">
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80&auto=format&fit=crop" alt="Customer" class="testimonial-avatar" loading="lazy">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Switching to demo_website cut our procurement time by 70%. One platform, one invoice, zero headaches. The dashboard alone saved my team 10 hours a week."</p>
+        <div class="testimonial-name">James Whitfield</div>
+        <div class="testimonial-role">Operations Director, Whitfield & Co.</div>
+      </div>
+      <div class="testimonial-card reveal">
+        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80&auto=format&fit=crop" alt="Customer" class="testimonial-avatar" loading="lazy">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The vendor portal transformed how we manage orders. We went from 15 suppliers to one consolidated platform. The eco-certified product range is a bonus we didn't expect."</p>
+        <div class="testimonial-name">Sarah Chen</div>
+        <div class="testimonial-role">Procurement Head, TechStart Inc.</div>
+      </div>
+      <div class="testimonial-card reveal">
+        <img src="https://images.unsplash.com/photo-1472099483943-3ec6e2c5d004?w=400&q=80&auto=format&fit=crop" alt="Customer" class="testimonial-avatar" loading="lazy">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"As a growing company, we needed a procurement partner that could scale with us. demo_website handled everything from stationery to office furniture — flawlessly."</p>
+        <div class="testimonial-name">Michael Rodriguez</div>
+        <div class="testimonial-role">CEO, BuildRight Co.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA with background image -->
+<section class="cta-section" style="padding:80px 0">
+  <div class="container">
+    <h2 class="section-title reveal" style="color:#fff">Ready to get started?</h2>
+    <p class="section-sub reveal" style="color:rgba(255,255,255,.85)">Create a free account and start ordering in minutes. No contracts, no setup fees.</p>
+    <a href="login.html" class="btn btn-primary reveal">Get Started — It's Free</a>
+  </div>
+</section>
+
+<!-- Founder's Note -->
+<section>
+  <div class="container">
+    <div class="founder-note reveal">
+      <p style="font-size:1.1rem;color:var(--text);line-height:1.8;font-style:italic">
+        "After decades in procurement, I learned one thing — businesses don't need more suppliers. They need one partner who consolidates everything, delivers on time, and provides data you can act on. That's what we built. Every feature on this platform exists because we lived the problem it solves."
+      </p>
+      <div style="margin-top:20px;display:flex;align-items:center;gap:16px">
+        <img src="https://images.unsplash.com/photo-1472099483943-3ec6e2c5d004?w=400&q=80&auto=format&fit=crop" alt="Founder" class="testimonial-avatar" style="width:50px;height:50px" loading="lazy">
+        <div>
+          <div style="font-weight:700;font-size:.95rem">Robert Hayes</div>
+          <div style="font-size:.82rem;color:var(--text-dim)">Founder & CEO, demo_website</div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <script>
+const PRODUCT_IMAGES = {"1": "https://images.unsplash.com/photo-1583485088034-697b5bc36b92?w=600&q=80&auto=format&fit=crop", "2": "https://images.unsplash.com/photo-1583485088034-697b5bc36b92?w=600&q=80&auto=format&fit=crop", "3": "https://images.unsplash.com/photo-1583485088034-697b5bc36b92?w=600&q=80&auto=format&fit=crop", "4": "https://images.unsplash.com/photo-1585421514738-01798e348b17?w=600&q=80&auto=format&fit=crop", "5": "https://images.unsplash.com/photo-1585421514738-01798e348b17?w=600&q=80&auto=format&fit=crop", "6": "https://images.unsplash.com/photo-1585421514738-01798e348b17?w=600&q=80&auto=format&fit=crop", "7": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&q=80&auto=format&fit=crop", "8": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&q=80&auto=format&fit=crop", "9": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&q=80&auto=format&fit=crop", "10": "https://images.unsplash.com/photo-1583485088034-697b5bc36b92?w=600&q=80&auto=format&fit=crop", "11": "https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?w=600&q=80&auto=format&fit=crop", "12": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600&q=80&auto=format&fit=crop", "13": "https://images.unsplash.com/photo-1513885535751-8b9238fd3c42?w=600&q=80&auto=format&fit=crop", "14": "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=600&q=80&auto=format&fit=crop", "15": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&q=80&auto=format&fit=crop", "16": "https://images.unsplash.com/photo-1580480045273-3611478254b4?w=600&q=80&auto=format&fit=crop"};
 const featured=PRODUCTS.slice(0,4);
 document.getElementById("featured-grid").innerHTML=featured.map(p=>`
   <a href="product.html?id=${p.id}" class="product-card reveal">
-    <div class="product-img">${p.emoji}</div>
+    <div class="product-img">${PRODUCT_IMAGES[p.id] ? `<img src="${PRODUCT_IMAGES[p.id]}" alt="${p.name}" loading="lazy">` : p.emoji}</div>
     <div class="product-body">
       <span class="product-cat">${p.category}</span>
       <h3>${p.name}</h3>
@@ -135,3 +305,5 @@ document.getElementById("featured-grid").innerHTML=featured.map(p=>`
 <script src="js/auth.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/app.js"></script>
+</body>
+</html>
